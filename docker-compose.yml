@@ -15,7 +15,7 @@ services:
     build: ./data
     expose:
       - "8080"
-  gui:
+  wpe:
     build: ./wpe
     depends_on:
       - proxy
