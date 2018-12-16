@@ -15,6 +15,10 @@ services:
     build: ./data
     expose:
       - "8080"
+  oba_proxy:
+    build: ./oba_proxy
+    expose:
+      - "5000"
   wpe:
     build: ./wpe
     depends_on:
