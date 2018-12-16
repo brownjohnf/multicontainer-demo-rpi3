@@ -9,5 +9,5 @@ RUN pip install -r requirements.txt
 COPY . ./
 
 ENV FLASK_APP index.py
-CMD ["python", "-m", "flask", "run"]
+CMD ["python", "index.py"]
 
