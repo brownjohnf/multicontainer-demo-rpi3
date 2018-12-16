@@ -1,14 +1,13 @@
+'use strict';
+
 const express = require('express');
+const { exec } = require('child_process');
+
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-const {
-  exec
-} = require('child_process');
 
 period = parseInt(process.env.PERIOD) || 500;
-
-server.listen(8080);
 
 let sendTemp = function(socket, data) {
    //data.color = '#FF0000'
@@ -16,7 +15,6 @@ let sendTemp = function(socket, data) {
 }
 
 let getCpuTemp = function(socket) {
-  'use strict';
   exec('cat /sys/class/thermal/thermal_zone*/temp', (err, stdout) => {
     if (err) throw err;
     let data = {
@@ -27,7 +25,6 @@ let getCpuTemp = function(socket) {
 };
 
 let getRandomTemp = function(socket) {
-  'use strict'
   let data = {
     t: (20 + Math.floor(Math.random() * 30))
   };
@@ -35,14 +32,17 @@ let getRandomTemp = function(socket) {
 };
 
 io.on('connection', function(socket) {
-  'use strict';
   console.log('a user connected');
+
   let dataLoop = setInterval(function() {
     //getCpuTemp(socket);
     getRandomTemp(socket);
   }, period);
-	socket.on('disconnect', function() {
+
+  socket.on('disconnect', function() {
       console.log('a user disconnected');
-			clearInterval(dataLoop);
+      clearInterval(dataLoop);
    });
 });
+
+server.listen(8080);
