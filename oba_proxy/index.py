@@ -28,3 +28,5 @@ def catchall(path):
     print(url)
     return urllib.request.urlopen(url).read()
 
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000)
