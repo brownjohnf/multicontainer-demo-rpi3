@@ -7,7 +7,7 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
-period = parseInt(process.env.PERIOD) || 500;
+const period = parseInt(process.env.PERIOD) || 500;
 
 let sendTemp = function(socket, data) {
    //data.color = '#FF0000'
