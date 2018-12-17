@@ -9,8 +9,15 @@ app = Flask(__name__)
 
 @app.route('/')
 def get():
-    raw_html = urllib.request.urlopen('http://199.191.49.179/where/iphone/stop.action?id=1_31736&route=1_100019').read()
+    stop = request.args.get('stop')
+    route = request.args.get('route')
 
+    url = 'http://199.191.49.179/where/iphone/stop.action?id=1_' + \
+        stop + \
+        '&route=1_' + \
+        route
+
+    raw_html = urllib.request.urlopen(url).read()
     html = BeautifulSoup(raw_html)
 
     html.find('div', id='topBar' ).extract()
