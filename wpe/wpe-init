@@ -3,16 +3,9 @@
 set -euxo pipefail
 
 fbcp &
-until ping -c 1 oba_proxy ; do :; done
+until ping -c 1 oba_proxy; do :; done
 
 echo "loading WPE with url: $WPE_URL"
 
-while true; do
-  for url in $WPE_URL https://duckduckgo.com/; do
-    bash -c 'WPELauncher $WPE_URL > /dev/null' &
-    pid=$!
-    sleep 10
-    kill $pid || true
-  done
-done
+WPELauncher $WPE_URL > /dev/null
 
