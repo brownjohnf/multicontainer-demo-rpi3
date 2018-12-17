@@ -8,6 +8,5 @@ RUN pip install -r requirements.txt
 
 COPY . ./
 
-ENV FLASK_APP index.py
-CMD ["python", "index.py"]
+CMD ["/src/index.py"]
 

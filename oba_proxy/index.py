@@ -1,4 +1,4 @@
-#!/user/bin/env python
+#!/usr/bin/env python
 
 from bs4 import BeautifulSoup
 import urllib.request
@@ -20,12 +20,22 @@ def get():
     for ul in html.find_all('ul', class_='buttons' ):
         ul.extract()
 
+    for tr in html.find_all('tr', class_='arrivalsRow'):
+        td = tr.find('td', class_='arrivalsStatusEntry')
+
+        try:
+            if int(td.string) < 0:
+                print('--> Removing negative time: ' + td.string)
+                tr.extract()
+        except:
+            print('--> Ignoring non-int: ' + td.string)
+            None
+
     return str(html)
 
 @app.route('/<path>')
 def catchall(path):
     url = 'http://199.191.49.179/' + request.url
-    print(url)
     return urllib.request.urlopen(url).read()
 
 if __name__ == '__main__':
