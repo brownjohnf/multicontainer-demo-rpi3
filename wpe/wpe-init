@@ -3,9 +3,17 @@
 set -euxo pipefail
 
 fbcp &
+
+STOPS=${STOPS:-''}
+ROUTES=${ROUTES:-''}
+
 until ping -c 1 oba_proxy; do :; done
+
+if [ -n $STOPS ] && [ -n $ROUTES ]; then
+  WPE_URL="http://oba_proxy:5000/?stop=${STOPS}&route=${ROUTES}"
+fi
 
 echo "loading WPE with url: $WPE_URL"
 
-WPELauncher $WPE_URL > /dev/null
+WPELauncher "$WPE_URL" > /dev/null
 
